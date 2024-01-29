@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRole {
+public class UserRoleDto {
 
     private UUID id;
     @NotNull(message = "user can't be null")
