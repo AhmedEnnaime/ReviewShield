@@ -22,5 +22,5 @@ public class ReviewDto {
     @NotBlank(message = "message can't be empty")
     private String message;
     @NotNull(message = "user can't be null")
-    private User user;
+    private UserDto user;
 }
