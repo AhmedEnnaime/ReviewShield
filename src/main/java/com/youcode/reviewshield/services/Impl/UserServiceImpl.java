@@ -69,21 +69,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         Optional<User> user = userRepository.findByUsername(username);
-        if (user.isPresent()) {
-            List<UserRole> userRoles = userRoleRepository.findAllByUserId(user.get().getId());
+        user.orElseThrow(() -> new UsernameNotFoundException("User not found!"));
 
-            Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        List<UserRole> userRoles = userRoleRepository.findAllByUserId(user.get().getId());
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-            userRoles.forEach(userRole -> {
-                authorities.add(new SimpleGrantedAuthority(userRole.getRole().getName()));
-            });
+        userRoles.forEach(userRole -> {
+            authorities.add(new SimpleGrantedAuthority(userRole.getRole().getName()));
+        });
 
-            return new org.springframework.security.core.userdetails.User(user.get().getUsername(),
-                    user.get().getPassword(), authorities);
-        }
-        return null;
+        return new org.springframework.security.core.userdetails.User(user.get().getUsername(),
+                user.get().getPassword(), authorities);
+
     }
 
     @Override

@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserRole {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne
