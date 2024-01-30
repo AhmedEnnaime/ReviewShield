@@ -2,23 +2,31 @@ package com.youcode.reviewshield.services.Impl;
 
 import com.youcode.reviewshield.models.dto.UserDto;
 import com.youcode.reviewshield.models.entities.User;
+import com.youcode.reviewshield.models.entities.UserRole;
 import com.youcode.reviewshield.repositories.UserRepository;
+import com.youcode.reviewshield.repositories.UserRoleRepository;
 import com.youcode.reviewshield.services.UserService;
 import com.youcode.reviewshield.utils.NotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
     private final ModelMapper modelMapper;
+    private final static String ROLE_PREFIX = "ROLE_";
 
     @Override
     public UserDto save(UserDto userDto) {
@@ -58,5 +66,28 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(uuid)
                 .orElseThrow(() -> NotFoundException.getNotFoundException(uuid, "user"));
         return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isPresent()) {
+            List<UserRole> userRoles = userRoleRepository.findAllByUserId(user.get().getId());
+
+            Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+            userRoles.forEach(userRole -> {
+                authorities.add(new SimpleGrantedAuthority(userRole.getRole().getName()));
+            });
+
+            return new org.springframework.security.core.userdetails.User(user.get().getUsername(),
+                    user.get().getPassword(), authorities);
+        }
+        return null;
+    }
+
+    @Override
+    public UserDto findByUsername(String username) {
+        return modelMapper.map(userRepository.findByUsername(username).get(), UserDto.class);
     }
 }
