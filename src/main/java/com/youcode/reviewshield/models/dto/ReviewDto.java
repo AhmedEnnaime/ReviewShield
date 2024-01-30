@@ -1,6 +1,7 @@
 package com.youcode.reviewshield.models.dto;
 
 import com.youcode.reviewshield.models.entities.User;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,9 @@ public class ReviewDto {
     private String title;
     @NotBlank(message = "message can't be empty")
     private String message;
+    @NotNull
+    @Min(value = 0, message = "the minimum value is 0")
+    private Integer reactions;
     @NotNull(message = "user can't be null")
     private UserDto user;
 }

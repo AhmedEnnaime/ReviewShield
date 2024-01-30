@@ -22,17 +22,15 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
-
     @Column
     private String title;
-
     @Column
     private String message;
-
+    @Column
+    private Integer reactions;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
