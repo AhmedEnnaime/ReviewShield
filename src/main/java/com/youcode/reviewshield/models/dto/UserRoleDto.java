@@ -18,7 +18,7 @@ public class UserRoleDto {
 
     private UUID id;
     @NotNull(message = "user can't be null")
-    private User user;
+    private UserDto user;
     @NotNull(message = "role can't be null")
     private Role role;
 }
