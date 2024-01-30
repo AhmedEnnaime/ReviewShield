@@ -1,7 +1,10 @@
 package com.youcode.reviewshield.services;
 
+import com.youcode.reviewshield.security.dto.AuthenticationRequest;
+import com.youcode.reviewshield.security.dto.AuthenticationResponse;
+
 public interface AuthenticationService {
 
-    Auth
+    AuthenticationResponse login(AuthenticationRequest authRequest);
 
 }
