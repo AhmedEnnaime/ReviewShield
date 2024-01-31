@@ -95,9 +95,4 @@ public class UserServiceImpl implements UserService {
     public UserDto findByUsername(String username) {
         return modelMapper.map(userRepository.findByUsername(username).get(), UserDto.class);
     }
-
-    @Override
-    public boolean report(UUID reviewID) {
-        return false;
-    }
 }

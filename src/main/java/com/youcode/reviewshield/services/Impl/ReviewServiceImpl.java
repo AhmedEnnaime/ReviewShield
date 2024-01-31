@@ -30,26 +30,18 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ReviewDto save(ReviewDto reviewDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.isAuthenticated()) {
-            Object principal = authentication.getPrincipal();
-
-            if (principal instanceof User) {
-                User userDetails = (User) principal;
-                reviewDto.setUser(userDetails);
-                reviewDto.getUser().setId(userDetails.getId());
-            } else {
-                throw new IllegalStateException("Unexpected principal type: " + principal.getClass());
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            if (userDetails instanceof User) {
+                User user = (User) userDetails;
+                reviewDto.setUser(user);
             }
-        } else {
-            throw new IllegalStateException("User not authenticated");
         }
 
         reviewDto.setId(UUID.randomUUID());
         Review review = modelMapper.map(reviewDto, Review.class);
         return modelMapper.map(reviewRepository.save(review), ReviewDto.class);
     }
-
 
     @Override
     public List<ReviewDto> getAll() {
@@ -61,14 +53,18 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto update(UUID uuid, ReviewDto reviewDto) {
-        Review review = modelMapper.map(reviewDto, Review.class);
-        if (!reviewRepository.existsById(uuid))
+        Optional<Review> optionalReview = reviewRepository.findById(uuid);
+
+        if (optionalReview.isEmpty()) {
             throw NotFoundException.getNotFoundException(uuid, "review");
-        reviewDto.setId(uuid);
-        Optional.ofNullable(review.getTitle()).ifPresent(reviewDto::setTitle);
-        Optional.ofNullable(review.getMessage()).ifPresent(reviewDto::setMessage);
-        Optional.ofNullable(review.getReactions()).ifPresent(reviewDto::setReactions);
-        return modelMapper.map(reviewRepository.save(review), ReviewDto.class);
+        }
+
+        Review existingReview = optionalReview.get();
+        existingReview.setTitle(reviewDto.getTitle());
+        existingReview.setMessage(reviewDto.getMessage());
+        existingReview.setReactions(reviewDto.getReactions());
+        Review updatedReview = reviewRepository.save(existingReview);
+        return modelMapper.map(updatedReview, ReviewDto.class);
     }
 
     @Override
