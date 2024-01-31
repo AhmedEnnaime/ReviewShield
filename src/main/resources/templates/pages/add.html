@@ -18,7 +18,6 @@
                     <div class="mt-1">
                         <input th:field="*{title}" placeholder="Enter title" id="title" name="message" class="shadow-sm focus:ring-indigo-500 px-4 py-2 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md">
                     </div>
-
                 </div>
 
 <!--                <input type="hidden" th:value="">-->
@@ -28,7 +27,13 @@
                     <div class="mt-1">
                         <textarea th:field="*{message}" id="message" name="message" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
                     </div>
+                </div>
 
+                <div class="sm:col-span-6">
+                    <label for="rating" class="block text-sm font-medium text-gray-700"> Rate the review from 1 to 10 </label>
+                    <div class="mt-1">
+                        <input th:field="*{reactions}" id="rating" type="number" max="10" min="0" name="rating" class="shadow-sm focus:ring-indigo-500 px-4 py-2 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md">
+                    </div>
                 </div>
 
             </div>

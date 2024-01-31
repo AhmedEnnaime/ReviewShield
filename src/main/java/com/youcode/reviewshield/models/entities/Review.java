@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -26,8 +27,10 @@ public class Review {
     private String title;
     @Column
     private String message;
-    @Column
+    @Column(columnDefinition = "integer default 1")
     private Integer reactions;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean reported;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

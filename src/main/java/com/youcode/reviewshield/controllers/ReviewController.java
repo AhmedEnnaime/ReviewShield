@@ -43,6 +43,12 @@ public class ReviewController {
         return "pages/add";
     }
 
+    @GetMapping("/report/{id}")
+    public String report(@PathVariable UUID id) {
+        return "redirect:/pages/reviews";
+    }
+
+
     @PostMapping("/delete/{id}")
     public String deleteReview(@PathVariable UUID id) {
         reviewService.delete(id);

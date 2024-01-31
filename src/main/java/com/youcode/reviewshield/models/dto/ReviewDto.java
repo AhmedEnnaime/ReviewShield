@@ -1,6 +1,7 @@
 package com.youcode.reviewshield.models.dto;
 
 import com.youcode.reviewshield.models.entities.User;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ public class ReviewDto {
     private String message;
     @NotNull
     @Min(value = 0, message = "the minimum value is 0")
+    @Max(value = 0, message = "the maximum value is 10")
     private Integer reactions;
     @NotNull(message = "user can't be null")
     private UserDto user;

@@ -39,11 +39,15 @@ public class ReviewShieldApplication {
                     .id(UUID.randomUUID())
                     .name("ADMIN")
                     .build();
+            var role3 = Role.builder()
+                    .id(UUID.randomUUID())
+                    .name("MODERATOR")
+                    .build();
             var role2 = Role.builder()
                     .id(UUID.randomUUID())
                     .name("USER")
                     .build();
-            roleRepository.saveAll(Arrays.asList(role1, role2));
+            roleRepository.saveAll(Arrays.asList(role1, role2, role3));
 
             User user = User.builder()
                     .id(UUID.randomUUID())
@@ -61,7 +65,7 @@ public class ReviewShieldApplication {
             UserRole userRole2 = UserRole.builder()
                     .id(UUID.randomUUID())
                     .user(user)
-                    .role(role2)
+                    .role(role3)
                     .build();
             userRoleRepository.saveAll(Arrays.asList(userRole1, userRole2));
 
@@ -70,10 +74,15 @@ public class ReviewShieldApplication {
                             .id(UUID.randomUUID())
                             .title("Title 1")
                             .message("ach had service dyal walo")
+                            .reactions(1)
+                            .reported(false)
                             .user(user)
-                            .build(), Review.builder()
+                            .build(),
+                            Review.builder()
                             .id(UUID.randomUUID())
                             .title("title 2")
+                            .reactions(1)
+                            .reported(false)
                             .message("Montakhab hazo b 2-0")
                             .user(user)
                             .build())
