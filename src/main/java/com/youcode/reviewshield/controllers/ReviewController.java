@@ -27,6 +27,13 @@ public class ReviewController {
             return "redirect:/?type=add";
         }
     }
+
+    @GetMapping
+    public String getAllReviews(Model model) {
+        model.addAttribute("reviews", reviewService.getAll());
+        return "pages/reviews";
+    }
+
     @GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("review", new ReviewDto());
@@ -35,8 +42,9 @@ public class ReviewController {
 
     @PostMapping("/delete/{id}")
     public String deleteReview(@PathVariable UUID id) {
+        System.out.println("Deleting review with ID: " + id);
         reviewService.delete(id);
-        return "redirect:/?type=delete";
+        return "redirect:/";
     }
     
 }
