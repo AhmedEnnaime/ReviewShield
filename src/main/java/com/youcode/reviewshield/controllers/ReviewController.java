@@ -22,11 +22,11 @@ public class ReviewController {
     @PostMapping("/add")
     public String createReview(@Valid @ModelAttribute ReviewDto reviewDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            return "pages/add";
-        }else{
-            reviewService.save(reviewDto);
-            return "redirect:/";
+            System.out.println("my errors " + bindingResult.getAllErrors());
+            return "pages/reviews/add?type=add";
         }
+            reviewService.save(reviewDto);
+            return "redirect:/reviews";
     }
 
     @GetMapping
@@ -38,13 +38,12 @@ public class ReviewController {
     @GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("review", new ReviewDto());
-        System.out.println("authenticated principal " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-//        model.addAttribute("userID", );
         return "pages/add";
     }
 
     @GetMapping("/report/{id}")
     public String report(@PathVariable UUID id) {
+        reviewService.report(id);
         return "redirect:/pages/reviews";
     }
 

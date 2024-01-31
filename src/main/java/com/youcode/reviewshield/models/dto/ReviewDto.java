@@ -19,14 +19,9 @@ import java.util.UUID;
 public class ReviewDto {
 
     private UUID id;
-    @NotBlank(message = "title can't be empty")
     private String title;
-    @NotBlank(message = "message can't be empty")
     private String message;
-    @NotNull
-    @Min(value = 0, message = "the minimum value is 0")
-    @Max(value = 0, message = "the maximum value is 10")
     private Integer reactions;
-    @NotNull(message = "user can't be null")
-    private UserDto user;
+    private Boolean reported;
+    private User user;
 }

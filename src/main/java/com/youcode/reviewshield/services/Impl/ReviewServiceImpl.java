@@ -11,6 +11,9 @@ import com.youcode.reviewshield.services.ReviewService;
 import com.youcode.reviewshield.utils.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +29,27 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto save(ReviewDto reviewDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof User) {
+                User userDetails = (User) principal;
+                reviewDto.setUser(userDetails);
+                reviewDto.getUser().setId(userDetails.getId());
+            } else {
+                throw new IllegalStateException("Unexpected principal type: " + principal.getClass());
+            }
+        } else {
+            throw new IllegalStateException("User not authenticated");
+        }
+
+        reviewDto.setId(UUID.randomUUID());
         Review review = modelMapper.map(reviewDto, Review.class);
         return modelMapper.map(reviewRepository.save(review), ReviewDto.class);
     }
+
 
     @Override
     public List<ReviewDto> getAll() {
@@ -62,5 +83,16 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = reviewRepository.findById(uuid)
                 .orElseThrow(() -> NotFoundException.getNotFoundException(uuid, "review"));
         return modelMapper.map(review, ReviewDto.class);
+    }
+
+    @Override
+    public void report(UUID uuid) {
+        Review existingReview = reviewRepository.findById(uuid)
+                .orElseThrow(() -> NotFoundException.getNotFoundException(uuid, "review"));
+
+        if (!existingReview.getReported()) {
+            existingReview.setReported(true);
+            reviewRepository.save(existingReview);
+        }
     }
 }

@@ -60,7 +60,7 @@ public class ReviewShieldApplication {
             UserRole userRole1 = UserRole.builder()
                             .id(UUID.randomUUID())
                             .user(user)
-                            .role(role1)
+                            .role(role2)
                             .build();
             UserRole userRole2 = UserRole.builder()
                     .id(UUID.randomUUID())

@@ -50,11 +50,11 @@
             <div class="flex justify-between p-4 mt-4">
                 <div class="flex items-center">
                     <div class="flex items-center">
-                        <a th:text="${review.user.getUsername()}" class="mx-2 font-semibold text-gray-700 none:text-gray-200" tabindex="0" role="link"></a>
+                        <a th:text="${review.user != null ? review.user.getUsername() : 'Unknown'}" class="mx-2 font-semibold text-gray-700 none:text-gray-200" tabindex="0" role="link"></a>
                     </div>
                     <span class="mx-1 text-xs text-gray-600 none:text-gray-300">21 SEP 2015</span>
                 </div>
-                <form th:action="@{/reviews/report/${review.id}}" method="post">
+                <form th:if="${#authorization.expression('hasAnyAuthority(''MODERATOR'')')}" th:unless="${review.reported}" th:action="@{/reviews/report/${review.id}}" method="post">
                     <button type="submit"><a><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="25" height="25" viewBox="0 0 256 256" xml:space="preserve">
 
 <defs>

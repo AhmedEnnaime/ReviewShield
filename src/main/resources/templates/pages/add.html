@@ -5,7 +5,7 @@
 <body>
 <div th:replace="fragments/navbar :: header"></div>
 
-<form th:action="@{reviews/add}" method="POST" th:object="${review}" class="space-y-8 divide-y divide-gray-200 p-8">
+<form th:action="@{/reviews/add}" method="POST" th:object="${review}" class="space-y-8 divide-y divide-gray-200 p-8">
     <div class="space-y-8 divide-y divide-gray-200">
         <div>
             <div>
@@ -19,8 +19,6 @@
                         <input th:field="*{title}" placeholder="Enter title" id="title" name="message" class="shadow-sm focus:ring-indigo-500 px-4 py-2 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md">
                     </div>
                 </div>
-
-<!--                <input type="hidden" th:value="">-->
 
                 <div class="sm:col-span-6">
                     <label for="message" class="block text-sm font-medium text-gray-700"> Message </label>

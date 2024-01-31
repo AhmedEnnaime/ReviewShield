@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -26,7 +27,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final ModelMapper modelMapper;
-    private final static String ROLE_PREFIX = "ROLE_";
 
     @Override
     public UserDto save(UserDto userDto) {
@@ -83,6 +83,12 @@ public class UserServiceImpl implements UserService {
         return new org.springframework.security.core.userdetails.User(user.get().getUsername(),
                 user.get().getPassword(), authorities);
 
+    }
+
+    private static List<GrantedAuthority> getAuthorities(List<String> roles) {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .collect(Collectors.toList());
     }
 
     @Override
