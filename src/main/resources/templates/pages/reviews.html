@@ -12,7 +12,7 @@
                 <div class="flex justify-between p-4">
                     <span class="text-xs font-medium text-blue-600 uppercase none:text-blue-400">Review</span>
                     <div class="flex gap-2">
-                        <form th:action="@{/reviews/delete/{id}}" method="post" th:object="${review}" th:method="post">
+                        <form th:action="@{reviews/delete/}+${review.id}" method="post" th:object="${review}">
                             <button type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="25" height="25" viewBox="0 0 256 256" xml:space="preserve">
 

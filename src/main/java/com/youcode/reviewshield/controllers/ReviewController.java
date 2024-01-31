@@ -4,6 +4,7 @@ import com.youcode.reviewshield.models.dto.ReviewDto;
 import com.youcode.reviewshield.services.ReviewService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +25,7 @@ public class ReviewController {
             return "pages/add";
         }else{
             reviewService.save(reviewDto);
-            return "redirect:/?type=add";
+            return "redirect:/";
         }
     }
 
@@ -37,12 +38,13 @@ public class ReviewController {
     @GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("review", new ReviewDto());
+        System.out.println("authenticated principal " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//        model.addAttribute("userID", );
         return "pages/add";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteReview(@PathVariable UUID id) {
-        System.out.println("Deleting review with ID: " + id);
         reviewService.delete(id);
         return "redirect:/";
     }

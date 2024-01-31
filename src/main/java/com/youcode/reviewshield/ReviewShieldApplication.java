@@ -65,13 +65,18 @@ public class ReviewShieldApplication {
                     .build();
             userRoleRepository.saveAll(Arrays.asList(userRole1, userRole2));
 
-            reviewRepository.save(
-                    Review.builder()
+            reviewRepository.saveAll(
+                    Arrays.asList(Review.builder()
                             .id(UUID.randomUUID())
-                            .title("title")
+                            .title("Title 1")
                             .message("ach had service dyal walo")
                             .user(user)
-                            .build()
+                            .build(), Review.builder()
+                            .id(UUID.randomUUID())
+                            .title("title 2")
+                            .message("Montakhab hazo b 2-0")
+                            .user(user)
+                            .build())
             );
 
             System.out.println("Executing code during application startup.");

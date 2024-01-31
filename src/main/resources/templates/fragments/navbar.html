@@ -6,7 +6,6 @@
                     <a href="#">
                         <img class="w-auto h-6 sm:h-7" src="https://merakiui.com/images/full-logo.svg" alt="">
                     </a>
-
                   
                     <div class="flex lg:hidden">
                         <button x-cloak @click="isOpen = !isOpen" type="button" class="text-gray-500 none:text-gray-200 hover:text-gray-600 none:hover:text-gray-400 focus:outline-none focus:text-gray-600 none:focus:text-gray-400" aria-label="toggle menu">
@@ -23,26 +22,14 @@
 
                 <div x-cloak :class="[isOpen ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']" class="absolute inset-x-0 z-20 flex-1 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white none:bg-gray-800 lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center lg:justify-between">
                     <div class="flex flex-col text-gray-600 capitalize none:text-gray-300 lg:flex lg:px-16 lg:-mx-4 lg:flex-row lg:items-center">
-                        <a href="#" class="mt-2 transition-colors duration-300 transform lg:mt-0 lg:mx-4 hover:text-gray-900 none:hover:text-gray-200">Home</a>
-                        <a href="#" class="mt-2 transition-colors duration-300 transform lg:mt-0 lg:mx-4 hover:text-gray-900 none:hover:text-gray-200">Reviews</a>
-                        <a href="#" class="mt-2 transition-colors duration-300 transform lg:mt-0 lg:mx-4 hover:text-gray-900 none:hover:text-gray-200">Add Review</a>
+                        <a th:href="@{/}" class="mt-2 cursor-pointer transition-colors duration-300 transform lg:mt-0 lg:mx-4 hover:text-gray-900 none:hover:text-gray-200">Home</a>
+                        <a th:href="@{reviews}" class="mt-2 cursor-pointer transition-colors duration-300 transform lg:mt-0 lg:mx-4 hover:text-gray-900 none:hover:text-gray-200">Reviews</a>
+                        <a th:href="@{reviews/add}" class="mt-2 cursor-pointer transition-colors duration-300 transform lg:mt-0 lg:mx-4 hover:text-gray-900 none:hover:text-gray-200">Add Review</a>
                     </div>
 
                     <div class="flex justify-center mt-6 lg:flex lg:mt-0 lg:-mx-2">
-                        <a class="border-b-2 border-transparent hover:text-gray-800 transition-colors duration-300 transform none:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6" >
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="25" height="25" viewBox="0 0 256 256" xml:space="preserve">
-                    <defs>
-                    </defs>
-                                <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
-                        <path d="M 54.203 46.417 c -10.444 0 -18.941 -8.497 -18.941 -18.942 v -8.534 C 35.262 8.497 43.759 0 54.203 0 c 10.445 0 18.942 8.497 18.942 18.941 v 8.534 C 73.146 37.92 64.648 46.417 54.203 46.417 z M 54.203 4 c -8.239 0 -14.941 6.703 -14.941 14.941 v 8.534 c 0 8.239 6.703 14.942 14.941 14.942 c 8.239 0 14.942 -6.703 14.942 -14.942 v -8.534 C 69.146 10.703 62.442 4 54.203 4 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                                    <path d="M 81.619 90 H 26.788 c -1.104 0 -2 -0.896 -2 -2 s 0.896 -2 2 -2 H 79.62 V 66.135 c 0 -10.872 -8.846 -19.718 -19.718 -19.718 H 48.506 c -4.447 0 -8.816 1.541 -12.302 4.339 c -0.862 0.693 -2.12 0.553 -2.812 -0.308 c -0.691 -0.861 -0.554 -2.12 0.308 -2.812 c 4.193 -3.366 9.452 -5.22 14.806 -5.22 h 11.396 c 13.078 0 23.718 10.64 23.718 23.718 V 88 C 83.619 89.104 82.724 90 81.619 90 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                                    <path d="M 30.455 83.544 H 17.932 c -6.37 0 -11.552 -5.182 -11.552 -11.552 v -6.495 c 0 -6.37 5.182 -11.552 11.552 -11.552 h 12.523 c 0.807 0 1.534 0.484 1.845 1.229 c 0.912 2.181 1.609 4.396 2.081 6.604 h 22.447 c 0.55 0 1.075 0.227 1.453 0.626 l 4.698 4.967 c 0.729 0.771 0.729 1.978 0 2.748 l -4.698 4.967 c -0.378 0.399 -0.903 0.626 -1.453 0.626 H 34.381 c -0.472 2.209 -1.169 4.423 -2.081 6.604 C 31.989 83.06 31.262 83.544 30.455 83.544 z M 17.932 57.945 c -4.164 0 -7.552 3.388 -7.552 7.552 v 6.495 c 0 4.164 3.388 7.552 7.552 7.552 h 11.165 c 0.766 -2.045 1.321 -4.109 1.652 -6.152 c 0.157 -0.968 0.993 -1.68 1.974 -1.68 h 23.244 l 2.807 -2.967 l -2.807 -2.967 H 32.723 c -0.981 0 -1.817 -0.712 -1.974 -1.68 c -0.332 -2.044 -0.886 -4.107 -1.652 -6.153 H 17.932 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                                    <circle cx="17.142" cy="68.742" r="2.932" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform="  matrix(1 0 0 1 0 0) "/>
-                    </g>
-                </svg>
-                        </a>
 
-                        <a class="border-b-2 border-transparent hover:text-gray-800 transition-colors duration-300 transform none:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6" >
+                        <a th:href="@{/logout}" class="border-b-2 border-transparent hover:text-gray-800 transition-colors duration-300 transform none:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="25" height="25" viewBox="0 0 256 256" xml:space="preserve">
                     <defs>
                     </defs>
