@@ -57,10 +57,10 @@ public class ReviewController {
         return "redirect:/reviews";
     }
 
-    @GetMapping("/report/{id}")
+    @PostMapping("/report/{id}")
     public String report(@PathVariable UUID id) {
         reviewService.report(id);
-        return "redirect:/pages/reviews";
+        return "redirect:/reviews";
     }
 
     @PostMapping("/delete/{id}")
