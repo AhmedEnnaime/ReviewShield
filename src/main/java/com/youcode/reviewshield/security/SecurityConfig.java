@@ -19,7 +19,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authRequest -> {
             authRequest.requestMatchers("/css/**").permitAll();
             authRequest.requestMatchers("/admins/**", "/users/**").hasAnyRole("ADMIN");
-            authRequest.requestMatchers("/report").hasAnyAuthority("MODERATOR");
+            authRequest.requestMatchers("/reviews/report").hasAnyAuthority("MODERATOR");
             authRequest.requestMatchers("/", "/reviews/**").authenticated();
         });
         http.cors(AbstractHttpConfigurer::disable);

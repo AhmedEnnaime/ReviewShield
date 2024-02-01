@@ -49,14 +49,11 @@ public class ReviewController {
 
     @PostMapping("/update/{id}")
     public String updateReview(@PathVariable UUID id, @Valid @ModelAttribute ReviewDto updatedReviewDto, BindingResult bindingResult) {
-        System.out.println("HERE");
         if (bindingResult.hasErrors()) {
             System.out.println("Update Review Errors: " + bindingResult.getAllErrors());
             return "pages/update";
         }
-        System.out.println("I'm good till now");
         reviewService.update(id, updatedReviewDto);
-        System.out.println("I think I'm good till now");
         return "redirect:/reviews";
     }
 
@@ -65,7 +62,6 @@ public class ReviewController {
         reviewService.report(id);
         return "redirect:/pages/reviews";
     }
-
 
     @PostMapping("/delete/{id}")
     public String deleteReview(@PathVariable UUID id) {
