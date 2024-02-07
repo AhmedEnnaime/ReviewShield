@@ -7,6 +7,7 @@ import com.youcode.reviewshield.models.entities.Review;
 import com.youcode.reviewshield.models.entities.Role;
 import com.youcode.reviewshield.models.entities.User;
 import com.youcode.reviewshield.repositories.ReviewRepository;
+import com.youcode.reviewshield.repositories.UserRepository;
 import com.youcode.reviewshield.services.ReviewService;
 import com.youcode.reviewshield.utils.NotFoundException;
 import lombok.AllArgsConstructor;
@@ -26,17 +27,13 @@ public class ReviewServiceImpl implements ReviewService {
 
     private ModelMapper modelMapper;
     private ReviewRepository reviewRepository;
+    private UserRepository userRepository;
 
     @Override
     public ReviewDto save(ReviewDto reviewDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            if (userDetails instanceof User) {
-                User user = (User) userDetails;
-                reviewDto.setUser(user);
-            }
-        }
+        Optional<User> user = userRepository.findByUsername(authentication.getName());
+        user.ifPresent(reviewDto::setUser);
 
         reviewDto.setId(UUID.randomUUID());
         Review review = modelMapper.map(reviewDto, Review.class);

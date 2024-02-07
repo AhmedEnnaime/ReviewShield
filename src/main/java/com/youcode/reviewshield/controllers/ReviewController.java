@@ -1,9 +1,12 @@
 package com.youcode.reviewshield.controllers;
 
 import com.youcode.reviewshield.models.dto.ReviewDto;
+import com.youcode.reviewshield.models.dto.UserDto;
 import com.youcode.reviewshield.services.ReviewService;
+import com.youcode.reviewshield.services.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,7 @@ import java.util.UUID;
 public class ReviewController {
 
     private ReviewService reviewService;
+    private UserService userService;
 
     @PostMapping("/add")
     public String createReview(@Valid @ModelAttribute ReviewDto reviewDto, BindingResult bindingResult) {
@@ -30,7 +34,9 @@ public class ReviewController {
 
     @GetMapping
     public String getAllReviews(Model model) {
+        UserDto userDto = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("reviews", reviewService.getAll());
+        model.addAttribute("user", userDto);
         return "pages/reviews";
     }
 
